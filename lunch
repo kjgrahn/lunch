@@ -1,0 +1,45 @@
+#!/usr/bin/perl -w  # -*- perl -*-
+#
+# $Id: lunch,v 1.1 2002-06-28 21:11:06 grahn Exp $
+#
+# lunch - calculate working hours from
+# (in, out, lunch) triples
+#
+# Bugs: the original Excel sheet does ceil() on
+# tenths of hours - this one rounds.
+# I lose time, but better safe than sorry...
+#
+# /jgr
+#
+
+while(<>) {
+
+    /^(\d{1,2}.\d\d)\D+(\d{1,2}.\d\d)\D+(\d{1,2}.\d\d)/ or print, next;
+
+    ($morn, $eve, $lunch) = ($1, $2, $3);
+
+    # make minutes of everything
+
+    ($mh, $mm) = $morn =~ /(\d+).(\d+)/;
+    ($eh, $em) = $eve =~ /(\d+).(\d+)/;
+    ($lh, $lm) = $lunch =~ /(\d+).(\d+)/;
+
+    die "most hours only have sixty minutes...\n"
+	unless ($mm<60 && $em<60 && $lm<60);
+
+    $ms = $mh*60+$mm;
+    $es = $eh*60+$em;
+    $ls = $lh*60+$lm;
+
+    # calculate working time, in hours
+
+    $works = $es - $ms - $ls;
+
+    $workh = $works / 60;
+
+    # print working time, rounded to 0.01h
+
+    printf("%s %s %s -> %d:%02d (%.2f h; %.1f h)\n", $morn, $eve, $lunch, $works/60, $works % 60, $workh, $workh);
+}
+
+exit 0;
