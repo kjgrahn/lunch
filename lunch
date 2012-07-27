@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w  # -*- perl -*-
 #
-# $Id: lunch,v 1.1 2002-06-28 21:11:06 grahn Exp $
+# $Id: lunch,v 1.2 2012-07-27 22:56:24 grahn Exp $
 #
 # lunch - calculate working hours from
 # (in, out, lunch) triples
@@ -11,6 +11,8 @@
 #
 # /jgr
 #
+
+use POSIX;
 
 while(<>) {
 
@@ -25,7 +27,7 @@ while(<>) {
     ($lh, $lm) = $lunch =~ /(\d+).(\d+)/;
 
     die "most hours only have sixty minutes...\n"
-	unless ($mm<60 && $em<60 && $lm<60);
+        unless ($mm<60 && $em<60 && $lm<60);
 
     $ms = $mh*60+$mm;
     $es = $eh*60+$em;
@@ -37,9 +39,24 @@ while(<>) {
 
     $workh = $works / 60;
 
+    $workq = floor($workh);
+    $addon = $workh - $workq;
+    if($addon>0.875) {
+        $workq += 1;
+    } elsif($addon>0.625) {
+        $workq += .750;
+    } elsif($addon>0.375) {
+        $workq += .500;
+    } elsif($addon>0.125) {
+        $workq += .250;
+    }
+
     # print working time, rounded to 0.01h
 
-    printf("%s %s %s -> %d:%02d (%.2f h; %.1f h)\n", $morn, $eve, $lunch, $works/60, $works % 60, $workh, $workh);
+    printf("%s %s %s ->%2dh%02dm (%.2f h; %.1f h; %.2f h)\n",
+           $morn, $eve, $lunch,
+           $works/60, $works % 60,
+           $workh, $workh, $workq);
 }
 
 exit 0;
