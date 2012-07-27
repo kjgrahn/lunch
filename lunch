@@ -17,7 +17,7 @@ use POSIX;
 
 while(<>) {
 
-    /^(\d{1,2}.\d\d)\D+(\d{1,2}.\d\d)\D+(\d{1,2}.\d\d)/ or print, next;
+    /^\s*(\d{1,2}.\d\d)\s+(\d{1,2}.\d\d)\s+(\d{1,2}.\d\d)/ or print, next;
 
     ($morn, $eve, $lunch) = ($1, $2, $3);
 
