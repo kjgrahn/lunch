@@ -13,8 +13,6 @@
 # /jgr
 #
 
-use POSIX;
-
 while(<>) {
 
     /^\s*(\d{1,2}.\d\d)\s+(\d{1,2}.\d\d)\s+(\d{1,2}.\d\d)/ or print, next;
@@ -40,12 +38,17 @@ while(<>) {
 
     $workh = $works / 60;
 
-    # print working time, rounded to 0.01h
+    # finally, our new time reporting system wants me
+    # to calculate the deviation from standard time
+    # (normally 8.00) manually
 
-    printf("%5s %5s %4s ->%2dh%02dm (%5.2f h; %4.1f h)\n",
+    $deviation = $workh - 8;
+
+    printf("%5s %5s %4s ->%2dh%02dm (%5.2f h; %4.1f h) [%+.2f]\n",
            $morn, $eve, $lunch,
            $works/60, $works % 60,
-           $workh, $workh);
+           $workh, $workh,
+	   $deviation);
 }
 
 exit 0;
