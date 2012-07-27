@@ -1,6 +1,7 @@
-#!/usr/bin/perl -w  # -*- perl -*-
+#!/usr/bin/perl -w
 #
-# $Id: lunch,v 1.2 2012-07-27 22:56:24 grahn Exp $
+# Copyright (c) 2002, 2012 Jörgen Grahn
+# All rights reserved.
 #
 # lunch - calculate working hours from
 # (in, out, lunch) triples
@@ -39,24 +40,12 @@ while(<>) {
 
     $workh = $works / 60;
 
-    $workq = floor($workh);
-    $addon = $workh - $workq;
-    if($addon>0.875) {
-        $workq += 1;
-    } elsif($addon>0.625) {
-        $workq += .750;
-    } elsif($addon>0.375) {
-        $workq += .500;
-    } elsif($addon>0.125) {
-        $workq += .250;
-    }
-
     # print working time, rounded to 0.01h
 
-    printf("%s %s %s ->%2dh%02dm (%.2f h; %.1f h; %.2f h)\n",
+    printf("%5s %5s %4s ->%2dh%02dm (%5.2f h; %4.1f h)\n",
            $morn, $eve, $lunch,
            $works/60, $works % 60,
-           $workh, $workh, $workq);
+           $workh, $workh);
 }
 
 exit 0;
