@@ -4,7 +4,7 @@
 ..
 .
 .
-.TH lunch 1 "JUL 2012" "LUNCH" "User Manuals"
+.TH lunch 1 "APR 2025" "LUNCH" "User Manuals"
 .
 .SH "NAME"
 lunch \- calculate working hours from in\-out\-lunch
@@ -42,11 +42,11 @@ and it produces
 .nf
 .ft CR
 # week of 2012-07-16
- 8.45 16.36 0.50 -> 7h01m ( 7.02 h;  7.0 h) [-0.98]
-10.09 17.40 0.55 -> 6h36m ( 6.60 h;  6.6 h) [-1.40]
- 9.07 21.13 0.50 ->11h16m (11.27 h; 11.3 h) [+3.27]
- 9.10 13.40 0.50 -> 3h40m ( 3.67 h;  3.7 h) [-4.33]
- 9.05 18.15 1.00 -> 8h10m ( 8.17 h;  8.2 h) [+0.17]
+ 8.45 16.36 0.50 -> 7h01m ( 7.00 h)
+10.09 17.40 0.55 -> 6h36m ( 6.50 h)
+ 9.07 21.13 0.50 ->11h16m (11.25 h)
+ 9.10 13.40 0.50 -> 3h40m ( 3.75 h)
+ 9.05 18.15 1.00 -> 8h10m ( 8.25 h)
 .fi
 .PP
 In other words, lines starting with
@@ -60,18 +60,7 @@ working time in hours and minutes.
 I chose the weird 8h10m format so you wouldn't accidentally
 report this as your working time in decimal format.
 .IP \-
-working time in hours, rounded to two decimal places
-.IP \-
-working time in hours, rounded to one decimal place
-.IP \-
-delta from my standard working time, which is 8 hours.
-Useful if your time reporting system forces you to
-document this deviation manually.
-.PP
-I used to have another column where the hours were rounded
-to nearest quarter of an hour, but fortunately I no longer
-need to use the time reporting system which wanted that
-weird variation.
+working time in hours, rounded to a quarter of an hour
 .
 .
 .SH "BUGS"

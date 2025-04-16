@@ -1,6 +1,6 @@
 #!/usr/bin/perl -w
 #
-# Copyright (c) 2002, 2012 Jörgen Grahn
+# Copyright (c) 2002, 2012, 2025 Jörgen Grahn
 # All rights reserved.
 #
 # lunch - calculate working hours from
@@ -13,6 +13,25 @@
 # /jgr
 #
 use strict;
+use POSIX;
+
+# Round a float to x.0, x.25, x.50 or x.75.
+sub quart($) {
+    my $n = shift;
+    my $q = floor($n);
+    my $d = $n - $q;
+
+    if($d>0.875) {
+        $q += 1;
+    } elsif($d>0.625) {
+        $q += .750;
+    } elsif($d>0.375) {
+        $q += .500;
+    } elsif($d>0.125) {
+        $q += .250;
+    }
+    return $q;
+}
 
 while(<>) {
 
@@ -45,11 +64,10 @@ while(<>) {
 
     my $deviation = $workh - 8;
 
-    printf("%5s %5s %4s ->%2dh%02dm (%5.2f h; %4.1f h) [%+.2f]\n",
+    printf("%5s %5s %4s ->%2dh%02dm (%5.2f h)\n",
            $morn, $eve, $lunch,
            $works/60, $works % 60,
-           $workh, $workh,
-	   $deviation);
+           quart $workh);
 }
 
 exit 0;
